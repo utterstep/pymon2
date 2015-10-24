@@ -1,0 +1,27 @@
+reporters:
+  - type: mailgun
+    name: mg-reporter
+    params:
+        domain: mg.example.com
+        api_key: example_api_key
+        sender: notify@mg.example.com
+        recepients: [utterstep@example.com]
+  - type: telegram_channel
+    name: tg-reporter
+    params:
+        bot_token: example_bot_token
+        channel: example_channel_name
+checks:
+  - name: free disk space
+    command: >
+        df -P /
+        | tail -n 1
+        | awk 'RS="\t" {
+          if($4 > 40000000) print "0;OK";
+          else print "2;only",$4,"free Kbytes"
+        }'
+    period: 30
+    comment: Check there is at least 40Gb free on the root FS
+    reporters:
+      - tg-reporter
+      - mg-reporter

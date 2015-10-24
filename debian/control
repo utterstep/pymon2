@@ -1,0 +1,18 @@
+Source: python-pymon2
+Section: misc
+Priority: extra
+Maintainer: Vlad Stepanov <8uk.8ak@gmail.com>
+Build-Depends:
+    debhelper (>= 9),
+    dupload,
+    python (>=2.7),
+    python-virtualenv,
+    build-essential,
+Standards-Version: 3.9.2
+
+Package: python-pymon2
+Architecture: all
+Depends: ${python:Depends},
+    python (>=2.7),
+    python-virtualenv,
+Description: python monitoring with customizable reporters

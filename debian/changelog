@@ -1,0 +1,29 @@
+python-pymon2 (0.1.1) unstable; urgency=low
+
+  * add telegram_channel reporter
+
+ -- Vlad Stepanov <8uk.8ak@gmail.com>  Sat, 24 Oct 2015 19:00:55 +0300
+
+python-pymon2 (0.1.0) unstable; urgency=low
+
+  * rename pymgmon to pymon2, huge refactoring (modular reporters system, multiple reporters for checks)
+
+ -- Vlad Stepanov <8uk.8ak@gmail.com>  Sat, 24 Oct 2015 15:45:55 +0300
+
+python-pymon2 (0.0.3) unstable; urgency=low
+
+  * [fix] slightly change error message
+
+ -- Vlad Stepanov <8uk.8ak@gmail.com>  Thu, 22 Oct 2015 14:05:55 +0300
+
+python-pymon2 (0.0.2) unstable; urgency=low
+
+  * [fix] include time in error message
+
+ -- Vlad Stepanov <8uk.8ak@gmail.com>  Thu, 22 Oct 2015 13:10:55 +0300
+
+python-pymon2 (0.0.1) unstable; urgency=low
+
+  * Initial release
+
+ -- Vlad Stepanov <8uk.8ak@gmail.com>  Tue, 20 Oct 2015 11:32:55 +0300

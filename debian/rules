@@ -1,0 +1,14 @@
+#!/usr/bin/make -f
+
+VENV=debian/venv
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	rm -rf $(VENV)
+	./make_venv.sh $(VENV)
+
+override_dh_auto_clean:
+	rm -rf $(VENV)
+	dh_auto_clean
