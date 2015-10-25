@@ -2,14 +2,23 @@
 from abc import ABCMeta, abstractmethod
 
 
+class CheckResultCode(object):
+    """
+    Constants for check result codes
+    """
+    SUCCESS = 0
+    INFO = 1
+    FAILURE = 2
+
+
 class CheckResult(object):
     """
     Simple wrapper for console check results
     """
-    def __init__(self, check_name, message, success):
+    def __init__(self, check_name, message, code):
         self._check_name = check_name
         self._message = message
-        self._success = success
+        self._code = code
 
     @property
     def message(self):
@@ -19,12 +28,11 @@ class CheckResult(object):
         return self._message
 
     @property
-    def success(self):
+    def code(self):
         """
-        Was result "successful" (not obligatory to report)
-        or not (report as soon as possible)
+        Severity level code of result
         """
-        return self._success
+        return self._code
 
     @property
     def check_name(self):
@@ -37,11 +45,21 @@ class CheckResult(object):
 class BaseReporter(object):
     """
     Abstract base class for reporter.
-
-    It just shows interface that reporter should have.
     """
     __metaclass__ = ABCMeta
+    DEFAULT_REPORT_LEVEL = CheckResultCode.FAILURE
+
+    def __init__(self, **optionals):
+        self._report_level = optionals.get('report_level',
+                                           self.DEFAULT_REPORT_LEVEL)
 
     @abstractmethod
     def report(self, result):
+        """
+        Stub just to show interface that reporter should have.
+        """
         raise NotImplementedError
+
+    @property
+    def report_level(self):
+        return self._report_level

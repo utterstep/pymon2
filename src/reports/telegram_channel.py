@@ -3,7 +3,7 @@ from datetime import datetime
 import requests
 import socket
 
-from .base import BaseReporter
+from .base import BaseReporter, CheckResultCode
 
 __all__ = ['TelegramChannelReporter']
 
@@ -45,11 +45,16 @@ class TelegramChannelReporter(BaseReporter):
     Reporter sending messages with failed checks data to Telegram channel
     """
     DEFAULT_MESSAGE_TEMPLATE = '''
-    Error on domain {domain}
+    {result_type} from domain {domain}
     _Time:_ {error_time_str}
 
-    *[{check_name}]* `{error_message}`
+    *[{check_name}]* `{report_message}`
     '''.replace('    ', '')
+    RESULT_TYPES = {
+        CheckResultCode.SUCCESS: 'Report',
+        CheckResultCode.INFO: 'Info message',
+        CheckResultCode.FAILURE: 'Error'
+    }
 
     def __init__(self, bot_token, channel, **optionals):
         """
@@ -59,6 +64,7 @@ class TelegramChannelReporter(BaseReporter):
         :param channel: name of Telegram channel to send reports to
         :param optionals: optional parameters like `custom_template`
         """
+        super(TelegramChannelReporter, self).__init__(**optionals)
         self._tg_bot = TelegramSenderBot(bot_token)
 
         self._channel = channel
@@ -72,7 +78,7 @@ class TelegramChannelReporter(BaseReporter):
         if result is None:
             # TODO send|log unknown check result info
             return
-        if not result.success:
+        if result.code >= self.report_level:
             self._tg_bot.send_message(**self.compose_message(result))
 
     def compose_message(self, result):
@@ -86,10 +92,11 @@ class TelegramChannelReporter(BaseReporter):
             'chat_id': '@{0}'.format(self.channel),
             'message': self.template.format(
                 domain=hostname,
-                error_message=result.message,
+                report_message=result.message,
                 check_name=result.check_name,
                 error_dt=error_time,
-                error_time_str=error_time.strftime('%d %b %Y, %H:%M:%S')
+                error_time_str=error_time.strftime('%d %b %Y, %H:%M:%S'),
+                result_type=self.RESULT_TYPES.get(result.code, result.code),
             ),
             'markdown': True,
         }

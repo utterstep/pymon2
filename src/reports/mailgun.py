@@ -3,7 +3,7 @@ from datetime import datetime
 import requests
 import socket
 
-from .base import BaseReporter
+from .base import BaseReporter, CheckResultCode
 
 __all__ = ['MailgunReporter']
 
@@ -56,13 +56,18 @@ class MailgunReporter(BaseReporter):
     """
     DEFAULT_EMAIL_SUBJECT = """[{check_name}] error on {domain}"""
     DEFAULT_EMAIL_TEMPLATE = """
-        <h3>Error on domain {domain}</h3>
+        <h3>{result_type} from domain {domain}</h3>
         <h4>[{check_name}]</h4>
         <time style="float:right;" datetime="{error_dt}">
             [{error_time_str}]
         </time>
-        <code>{error_message}</code>
+        <code>{report_message}</code>
     """
+    RESULT_TYPES = {
+        CheckResultCode.SUCCESS: 'Report',
+        CheckResultCode.INFO: 'Info message',
+        CheckResultCode.FAILURE: 'Error',
+    }
 
     def __init__(self, domain, api_key, sender, recepients, **optionals):
         """
@@ -74,6 +79,7 @@ class MailgunReporter(BaseReporter):
         :param recepients: `list` of emails of recepients
         :param optionals: optional parameters like `custom_template`
         """
+        super(MailgunReporter, self).__init__(**optionals)
         self._mg_client = MailgunSender(domain, api_key)
 
         self._sender = sender
@@ -90,7 +96,7 @@ class MailgunReporter(BaseReporter):
         if result is None:
             # TODO send|log unknown check result info
             return
-        if not result.success:
+        if result.code >= self.report_level:
             self._mg_client.send_message(**self.compose_message(result))
 
     def compose_message(self, result):
@@ -108,10 +114,11 @@ class MailgunReporter(BaseReporter):
                 check_name=result.check_name),
             'message': self.email_template.format(
                 domain=hostname,
-                error_message=result.message,
+                report_message=result.message,
                 check_name=result.check_name,
                 error_dt=error_time,
-                error_time_str=error_time.strftime('%d %b %Y, %H:%M:%S')
+                error_time_str=error_time.strftime('%d %b %Y, %H:%M:%S'),
+                result_type=self.RESULT_TYPES.get(result.code, result.code),
             ),
             'html': True,
         }

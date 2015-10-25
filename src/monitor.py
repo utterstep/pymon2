@@ -3,12 +3,15 @@ import yaml
 
 from tasks import PeriodicTask
 from utils import execute_cmd
-from reports import CheckResult, create_reporters
+from reports import CheckResult, CheckResultCode, create_reporters
 
 
 class ShellChecker(object):
-    SUCCESS_CODE = '0;'
-    FAIL_CODE = '2;'
+    CODE_MAP = {
+        '0': CheckResultCode.SUCCESS,
+        '1': CheckResultCode.INFO,
+        '2': CheckResultCode.FAILURE,
+    }
 
     def __init__(self, name, shell_cmd, reporters):
         self._name = name
@@ -17,17 +20,18 @@ class ShellChecker(object):
 
     def run_check(self):
         output = execute_cmd(self.shell_cmd).strip()
+        print output
         result = self.check(output)
         self.report(result)
 
     def check(self, output):
         index = output.find(';')
+        code = self.CODE_MAP.get(output[:index], None)
 
-        if output.startswith(self.SUCCESS_CODE):
-            return CheckResult(self.name, output[index + 1:], success=True)
-        elif output.startswith(self.FAIL_CODE):
-            print 'FAIL', output
-            return CheckResult(self.name, output[index + 1:], success=False)
+        if code is not None:
+            if code == CheckResultCode.FAILURE:
+                print 'FAIL', output
+            return CheckResult(self.name, output[index + 1:], code)
         else:
             # unknown check result
             return None

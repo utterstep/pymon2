@@ -1,9 +1,9 @@
-from .base import CheckResult
+from .base import CheckResult, CheckResultCode
 from .mailgun import MailgunReporter
 from .telegram_channel import TelegramChannelReporter
 
 __all__ = [
-    'CheckResult', 'create_reporters'
+    'CheckResult', 'CheckResultCode', 'create_reporters'
 ]
 
 
