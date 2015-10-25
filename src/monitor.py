@@ -20,7 +20,6 @@ class ShellChecker(object):
 
     def run_check(self):
         output = execute_cmd(self.shell_cmd).strip()
-        print output
         result = self.check(output)
         self.report(result)
 
