@@ -19,7 +19,7 @@ class PeriodicTask(object):
 
     def start(self, period, args=None, kwargs=None):
         """
-        Starts task execution.
+        Start task execution.
         Task will run each `period` seconds,
         untill `self.running` is falsy.
         """
@@ -57,7 +57,7 @@ class PeriodicTask(object):
 
     def stop(self):
         """
-        Stops current task, cancelling next waiting thread.
+        Stop current task, cancelling next waiting thread.
         """
         self._running = False
         self._period = None
@@ -67,7 +67,7 @@ class PeriodicTask(object):
     @property
     def running(self):
         """
-        Indicates whether task running or not
+        `True` if task is running, `False` otherwise
         """
         return self._running
 

@@ -4,7 +4,7 @@ from abc import ABCMeta, abstractmethod
 
 class CheckResult(object):
     """
-    Simple wrapper for console check results.
+    Simple wrapper for console check results
     """
     def __init__(self, check_name, message, success):
         self._check_name = check_name
@@ -21,7 +21,7 @@ class CheckResult(object):
     @property
     def success(self):
         """
-        Was result "successfull" (not obligatory to report)
+        Was result "successful" (not obligatory to report)
         or not (report as soon as possible)
         """
         return self._success
@@ -29,7 +29,7 @@ class CheckResult(object):
     @property
     def check_name(self):
         """
-        Name of check generated this result
+        Name of check
         """
         return self._check_name
 
@@ -38,7 +38,7 @@ class BaseReporter(object):
     """
     Abstract base class for reporter.
 
-    It just shows interface, that reporter should have.
+    It just shows interface that reporter should have.
     """
     __metaclass__ = ABCMeta
 

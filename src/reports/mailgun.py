@@ -16,14 +16,14 @@ class MailgunSender(object):
 
     def __init__(self, domain, api_key):
         """
-        Create new sender for given mailgun `domain` and `api_key`
+        Create new sender for given mailgun `domain` and `api_key`.
         """
         self._send_url = self.MAILGUN_URL.format(domain=domain)
         self._api_key = api_key
 
     def send_message(self, sender, to, subject, message, html=False):
         """
-        Send email via Mailgun API
+        Send email via Mailgun API.
         """
         return requests.post(
             self.send_url,
@@ -66,7 +66,7 @@ class MailgunReporter(BaseReporter):
 
     def __init__(self, domain, api_key, sender, recepients, **optionals):
         """
-        Create new MailgunReporter
+        Create new MailgunReporter.
 
         :param domain: Mailgun domain
         :param api_key: Mailgun API secret key
@@ -85,7 +85,7 @@ class MailgunReporter(BaseReporter):
 
     def report(self, result):
         """
-        Reports failed checks
+        Report failed checks.
         """
         if result is None:
             # TODO send|log unknown check result info
@@ -95,7 +95,7 @@ class MailgunReporter(BaseReporter):
 
     def compose_message(self, result):
         """
-        Prepare all data needed for MailgunSender
+        Prepare all data needed for MailgunSender.
         """
         hostname = socket.getfqdn()
         error_time = datetime.now()

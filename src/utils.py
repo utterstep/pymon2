@@ -10,7 +10,7 @@ logger = getLogger(__name__)
 
 def cmd_exists(cmd):
     """
-    Checks if `cmd` can be called
+    Check if `cmd` can be called.
 
     :type cmd: str
     """
@@ -22,8 +22,8 @@ def cmd_exists(cmd):
 
 def need_cmds(*cmds):
     """
-    Creates decorator, that runs wrapped function only if `cmds` is available
-    in this environment
+    Create decorator, that runs wrapped function only if `cmds` is available
+    in this environment.
 
     :raises RuntimeError: if any cmd from `cmds` is not present
     """
@@ -44,7 +44,7 @@ def need_cmds(*cmds):
 
 def execute_cmd(cmd, stdin_text=None):
     """
-    Executes `cmd` and returns it's output
+    Execute `cmd` and return its output.
 
     :param cmd: command as single string or as list of arguments
     :type cmd: str | list of str

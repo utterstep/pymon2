@@ -16,13 +16,13 @@ class TelegramSenderBot(object):
 
     def __init__(self, bot_token):
         """
-        Create new TelegramSenderBot using given `bot_token`
+        Create new TelegramSenderBot using given `bot_token`.
         """
         self._send_url = self.TELEGRAM_URL.format(token=bot_token)
 
     def send_message(self, chat_id, message, markdown=False):
         """
-        Send message to Telegram chat, group or channel
+        Send message to Telegram chat, group or channel.
         """
         return requests.post(
             self.send_url,
@@ -53,7 +53,7 @@ class TelegramChannelReporter(BaseReporter):
 
     def __init__(self, bot_token, channel, **optionals):
         """
-        Create new TelegramChannelReporter
+        Create new TelegramChannelReporter.
 
         :param bot_token: Telegram Bot API token
         :param channel: name of Telegram channel to send reports to
@@ -67,7 +67,7 @@ class TelegramChannelReporter(BaseReporter):
 
     def report(self, result):
         """
-        Report failed check
+        Report failed check.
         """
         if result is None:
             # TODO send|log unknown check result info
@@ -77,7 +77,7 @@ class TelegramChannelReporter(BaseReporter):
 
     def compose_message(self, result):
         """
-        Prepare all data needed for TelegramSenderBot
+        Prepare all data needed for TelegramSenderBot.
         """
         hostname = socket.getfqdn()
         error_time = datetime.now()
