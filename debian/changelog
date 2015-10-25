@@ -1,3 +1,9 @@
+python-pymon2 (0.2.0) unstable; urgency=low
+
+  * report codes instead of boolean `success` field
+
+ -- Vlad Stepanov <8uk.8ak@gmail.com>  Sun, 25 Oct 2015 23:55:48 +0300
+
 python-pymon2 (0.1.1) unstable; urgency=low
 
   * add telegram_channel reporter
