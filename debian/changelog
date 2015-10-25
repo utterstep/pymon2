@@ -1,3 +1,12 @@
+python-pymon2 (0.2.1) unstable; urgency=medium
+
+  [ Vlad Stepanov ]
+  * remove `print` instruction used for debugging purposes
+
+  [ utterstep ]
+
+ -- Vlad Stepanov <8uk.8ak@gmail.com>  Mon, 26 Oct 2015 01:01:09 +0300
+
 python-pymon2 (0.2.0) unstable; urgency=low
 
   * report codes instead of boolean `success` field
