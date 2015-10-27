@@ -11,17 +11,36 @@ reporters:
     params:
         bot_token: example_bot_token
         channel: example_channel_name
+  - type: logstash
+    name: logstash
+    params:
+        host: logstash.example.com
+        port: 5959
+        report_level: 1
+
 checks:
   - name: free disk space
     command: >
         df -P /
         | tail -n 1
         | awk 'RS="\t" {
-          if($4 > 40000000) print "0;OK";
-          else print "2;only",$4,"free Kbytes"
+          if($4 > 40000000) print "1;OK;{\"disk_space\":", $4"}";
+          else print "2;only",$4,"free Kbytes;{\"disk_space\":", $4"}";
         }'
     period: 30
     comment: Check there is at least 40Gb free on the root FS
     reporters:
-      - tg-reporter
+      - logstash
       - mg-reporter
+      - tg-reporter
+
+  - name: nginx is not running
+    command: >
+      echo $(service nginx status | grep "start/running")
+      | awk '{if ($0) print "0;OK"; else print "2;nginx instance is not running";}'
+    period: 30
+    comment: Check is nginx running
+    reporters:
+      - logstash
+      - mg-reporter
+      - tg-reporter
