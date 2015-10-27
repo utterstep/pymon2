@@ -15,9 +15,10 @@ class CheckResult(object):
     """
     Simple wrapper for console check results
     """
-    def __init__(self, check_name, message, code):
+    def __init__(self, check_name, message, data, code):
         self._check_name = check_name
         self._message = message
+        self._data = data
         self._code = code
 
     @property
@@ -26,6 +27,13 @@ class CheckResult(object):
         Human-readable message
         """
         return self._message
+
+    @property
+    def data(self):
+        """
+        Variouse report data in machine-readable format
+        """
+        return self._data
 
     @property
     def code(self):

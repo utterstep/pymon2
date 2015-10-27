@@ -1,4 +1,5 @@
 from .base import CheckResult, CheckResultCode
+from .logstash_reporter import LogstashReporter
 from .mailgun import MailgunReporter
 from .telegram_channel import TelegramChannelReporter
 
@@ -8,8 +9,9 @@ __all__ = [
 
 
 TYPES = {
+    'logstash': LogstashReporter,
     'mailgun': MailgunReporter,
-    'telegram_channel': TelegramChannelReporter
+    'telegram_channel': TelegramChannelReporter,
 }
 
 

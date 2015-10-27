@@ -24,13 +24,18 @@ class ShellChecker(object):
         self.report(result)
 
     def check(self, output):
-        index = output.find(';')
-        code = self.CODE_MAP.get(output[:index], None)
+        message_index = output.find(';')
+        data_index = output.find(';', message_index + 1)
+        data_index = data_index if data_index > 0 else len(output)
+
+        message = output[message_index + 1:data_index]
+        data = output[data_index + 1:]
+        code = self.CODE_MAP.get(output[:message_index], None)
 
         if code is not None:
             if code == CheckResultCode.FAILURE:
                 print 'FAIL', output
-            return CheckResult(self.name, output[index + 1:], code)
+            return CheckResult(self.name, message, data, code)
         else:
             # unknown check result
             return None
