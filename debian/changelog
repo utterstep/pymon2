@@ -1,3 +1,13 @@
+python-pymon2 (0.3.0) unstable; urgency=medium
+
+  [ Vlad Stepanov ]
+  * Add LogstashReporter
+  * make_changelog.sh
+
+  [ utterstep ]
+
+ -- Vlad Stepanov <8uk.8ak@gmail.com>  Tue, 27 Oct 2015 12:22:04 +0300
+
 python-pymon2 (0.2.1) unstable; urgency=medium
 
   [ Vlad Stepanov ]
