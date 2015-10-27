@@ -7,7 +7,7 @@ VENV=debian/venv
 
 override_dh_auto_build:
 	rm -rf $(VENV)
-	./make_venv.sh $(VENV)
+	./debian/make_venv.sh $(VENV)
 
 override_dh_auto_clean:
 	rm -rf $(VENV)
