@@ -1,0 +1,10 @@
+[Unit]
+Description=PyMon2 - python monitoring with customizable reporters
+
+[Service]
+Restart=on-failure
+ExecStart=/bin/bash -c "source /usr/lib/pymon2/venv/bin/activate && python /usr/lib/pymon2/pymon2.py"
+
+[Install]
+WantedBy=multi-user.target
+
