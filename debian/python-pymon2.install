@@ -1,4 +1,2 @@
 debian/venv                     /usr/lib/pymon2
-debian/upstart/pymon2.conf      /etc/init
-
 src/*                           /usr/lib/pymon2

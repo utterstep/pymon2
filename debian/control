@@ -4,6 +4,7 @@ Priority: extra
 Maintainer: Vlad Stepanov <8uk.8ak@gmail.com>
 Build-Depends:
     debhelper (>= 9),
+    dh-systemd (>= 1.5),
     dupload,
     python (>=2.7),
     python-virtualenv,
